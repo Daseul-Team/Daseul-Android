@@ -1,4 +1,4 @@
-package dev.kichan.multiwallpaper
+package dev.kichan.a2023_sunrin_dicon.base
 
 import android.content.Context
 import android.os.Bundle

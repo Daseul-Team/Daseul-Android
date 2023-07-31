@@ -1,7 +1,6 @@
-package dev.kichan.multiwallpaper
+package dev.kichan.a2023_sunrin_dicon.base
 
 import android.os.Bundle
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
