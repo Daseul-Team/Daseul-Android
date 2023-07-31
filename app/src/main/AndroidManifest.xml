@@ -19,6 +19,7 @@
 
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="43e95512dd0848ebce3be68cc1a4022a"/>
         <!--원래는 api key 이렇게 적으면 안되지만 알수없는 버그때문에 local.properties에 api key를 못가져와서 임시로 이렇게 적어둠 -->
+        <!--    todo:api key 숨기기    -->
 
         <activity
             android:name=".ui.main.MainActivity"
