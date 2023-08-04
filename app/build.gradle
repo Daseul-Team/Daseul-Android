@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 android {
     namespace 'dev.kichan.a2023_sunrin_dicon'
     compileSdk 33
@@ -13,6 +16,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "KAKAO_MAP_API_KEY", properties["kakao_map_api_key"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +55,11 @@ dependencies {
 
     //Glide
     implementation "com.github.bumptech.glide:glide:4.12.0"
+
+    //Kakao api
+//    implementation "com.kakao.sdk:v2-all:2.15.0"
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/libDaumMapAndroid.jar')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
