@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-//            map.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(1.0, 1.0), false)
+
         }
     }
 

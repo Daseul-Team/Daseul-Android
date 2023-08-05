@@ -30,13 +30,9 @@ abstract class BaseFragment<D : ViewDataBinding>(
         binding = DataBindingUtil.inflate(layoutInflater, resId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-
         initView()
+
+        return binding.root
     }
 
     abstract fun initView()
