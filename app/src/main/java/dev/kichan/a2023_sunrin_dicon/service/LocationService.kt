@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import dev.kichan.a2023_sunrin_dicon.R
 import dev.kichan.a2023_sunrin_dicon.ui.main.MainActivity
+import kotlin.math.round
 
 class LocationService : LifecycleService() {
     private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
@@ -29,8 +31,8 @@ class LocationService : LifecycleService() {
     }
 
     private val loationRqeust = LocationRequest.create().apply {
-        interval = 5000L
-        fastestInterval = 2000L
+        interval = 3 * 1000L
+        fastestInterval = 3 * 1000L
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -41,6 +43,7 @@ class LocationService : LifecycleService() {
             if(isStart.value!!){
                 for(location in locationResult.locations) {
                     currentLocation.value = location
+                    Toast.makeText(this@LocationService, "위치 업데이트 (${round(location.latitude)}, ${round(location.longitude)})", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -2,6 +2,7 @@ package dev.kichan.a2023_sunrin_dicon.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -14,6 +15,7 @@ import dev.kichan.a2023_sunrin_dicon.R
 import dev.kichan.a2023_sunrin_dicon.base.BaseActivity
 import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMainBinding
 import java.security.MessageDigest
+import java.util.Locale.Builder
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val navController : NavController by lazy { findNavController(R.id.fragment_main) }
@@ -30,6 +32,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            val permissionCheck =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE
+                )
+            }
         }
     }
 
