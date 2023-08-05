@@ -55,9 +55,13 @@ class LocationService : LifecycleService() {
 
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
-                            testRepository.test(TestReq(lat = location.latitude, lng = location.longitude))
-                        }
-                        catch (e : InternalError) {
+                            testRepository.test(
+                                TestReq(
+                                    lat = location.latitude,
+                                    lng = location.longitude
+                                )
+                            )
+                        } catch (e: InternalError) {
                             Log.e("test", e.toString())
                         }
                     }
