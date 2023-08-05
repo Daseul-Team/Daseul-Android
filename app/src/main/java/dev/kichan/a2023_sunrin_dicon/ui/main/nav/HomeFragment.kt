@@ -13,6 +13,7 @@ import dev.kichan.a2023_sunrin_dicon.R
 import dev.kichan.a2023_sunrin_dicon.base.BaseFragment
 import dev.kichan.a2023_sunrin_dicon.databinding.FragmentHomeBinding
 import dev.kichan.a2023_sunrin_dicon.service.LocationService
+import dev.kichan.a2023_sunrin_dicon.ui.map.MapActivity
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapPolyline
@@ -21,19 +22,6 @@ import net.daum.mf.map.api.MapView.setMapTilePersistentCacheEnabled
 import kotlin.math.round
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
-    private val map: MapView by lazy {
-        MapView(requireActivity()).apply {
-            isHDMapTileEnabled = true // HD 설정
-            setMapTilePersistentCacheEnabled(true) // 맵 타일 캐시 저장
-            currentLocationTrackingMode =
-                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading // 지도가 사용자 위치를 따라가도록 설정
-            setDefaultCurrentLocationMarker() //현위치 마커 기본값 사용
-
-            addPolyline(MapPolyline().apply {
-                lineColor = Color.argb(128, 255, 0, 0)
-            })
-        }
-    }
     val locationList = mutableListOf<MapPoint>()
 
     private var count: Int = 0
@@ -43,10 +31,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding.mapHome.addView(map)
 
         LocationService.isStart.observe(viewLifecycleOwner, locationStartObserver)
-        LocationService.currentLocation.observe(viewLifecycleOwner, locationObserver)
+//        LocationService.currentLocation.observe(viewLifecycleOwner, locationObserver)
 
         return binding.root
     }
@@ -55,6 +42,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         btnHomeStart.setOnClickListener {
             val intent = Intent(requireContext(), LocationService::class.java)
             requireContext().startService(intent)
+        }
+
+        btnHomeGotoMap.setOnClickListener {
+            val intent = Intent(requireContext(), MapActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -26,7 +26,7 @@ class LocationService : LifecycleService() {
         LocationServices.getFusedLocationProviderClient(this)
     }
 
-    private val notificationManager : NotificationManager by lazy {
+    private val notificationManager: NotificationManager by lazy {
         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
@@ -37,23 +37,29 @@ class LocationService : LifecycleService() {
     }
 
     private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult : LocationResult) {
+        override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
 
-            if(isStart.value!!){
-                for(location in locationResult.locations) {
+            if (isStart.value!!) {
+                for (location in locationResult.locations) {
                     currentLocation.value = location
-                    Toast.makeText(this@LocationService, "위치 업데이트 (${round(location.latitude)}, ${round(location.longitude)})", Toast.LENGTH_SHORT).show()
+                    pointList.add(location)
+                    Toast.makeText(
+                        this@LocationService,
+                        "위치 업데이트 (${round(location.latitude * 100) / 100}, ${round(location.longitude * 100) / 100})",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(!isStart.value!!) {
+        if (!isStart.value!!) {
             startForegroundService()
 
-            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            val permissionCheck =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationProviderClient.requestLocationUpdates(
                     loationRqeust, locationCallback, Looper.getMainLooper()
@@ -61,8 +67,7 @@ class LocationService : LifecycleService() {
             }
 
             isStart.value = true
-        }
-        else {
+        } else {
             stopSelf()
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
 
@@ -74,7 +79,11 @@ class LocationService : LifecycleService() {
 
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun startForegroundService() {
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW)
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            NOTIFICATION_CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_LOW
+        )
         notificationManager.createNotificationChannel(channel)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -99,12 +108,10 @@ class LocationService : LifecycleService() {
     companion object {
         val isStart = MutableLiveData(false)
         val currentLocation = MutableLiveData<Location?>()
+        val pointList = mutableListOf<Location>()
 
         const val NOTIFICATION_CHANNEL_ID = "location_notification"
         const val NOTIFICATION_CHANNEL_NAME = "location_notification"
         const val NOTIFICATION_ID = 100
-
-//        const val ACTION_START_SERVICE = "action_start_service"
-//        const val ACTION_STOP_SERVICE = "action_stop_service"
     }
 }
