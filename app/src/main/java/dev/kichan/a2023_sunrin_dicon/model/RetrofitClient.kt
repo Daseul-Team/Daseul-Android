@@ -1,5 +1,6 @@
 package dev.kichan.a2023_sunrin_dicon.model
 
+import dev.kichan.a2023_sunrin_dicon.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +15,7 @@ object RetrofitClient {
 
     private val retrofitBuilder: Retrofit.Builder = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("base url")
+        .baseUrl(BuildConfig.BASE_URL)
 
     fun getRetrofit(): Retrofit {
         retrofitBuilder.client(clientBuilder.build())

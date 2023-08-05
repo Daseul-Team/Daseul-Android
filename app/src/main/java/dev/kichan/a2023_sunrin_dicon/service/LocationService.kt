@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -18,10 +19,17 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import dev.kichan.a2023_sunrin_dicon.R
+import dev.kichan.a2023_sunrin_dicon.model.data.test.TestReq
+import dev.kichan.a2023_sunrin_dicon.model.repository.TestRepository
 import dev.kichan.a2023_sunrin_dicon.ui.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.round
 
 class LocationService : LifecycleService() {
+    private val testRepository = TestRepository()
+
     private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(this)
     }
@@ -31,8 +39,8 @@ class LocationService : LifecycleService() {
     }
 
     private val loationRqeust = LocationRequest.create().apply {
-        interval = 2 * 1000L
-        fastestInterval = 2 * 1000L
+        interval = 5 * 1000L
+        fastestInterval = 5 * 1000L
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
@@ -44,9 +52,19 @@ class LocationService : LifecycleService() {
                 for (location in locationResult.locations) {
                     currentLocation.value = location
                     pointList.add(location)
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            testRepository.test(TestReq(lat = location.latitude, lng = location.longitude))
+                        }
+                        catch (e : InternalError) {
+                            Log.e("test", e.toString())
+                        }
+                    }
+
                     Toast.makeText(
                         this@LocationService,
-                        "위치 업데이트 (${round(location.latitude * 100) / 100}, ${round(location.longitude * 100) / 100})",
+                        "위치 업데이트 (${round(location.latitude * 1000) / 1000}, ${round(location.longitude * 1000) / 1000})",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
