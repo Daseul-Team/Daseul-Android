@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nv_main"
+    app:startDestination="@id/menu_main_home">
+
+    <fragment
+        android:id="@+id/menu_main_home"
+        android:name="dev.kichan.a2023_sunrin_dicon.ui.main.nav.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/menu_main_main2"
+        android:name="dev.kichan.a2023_sunrin_dicon.ui.main.nav.Main2Fragment"
+        android:label="fragment_oneshot"
+        tools:layout="@layout/fragment_main2" />
+    <fragment
+        android:id="@+id/menu_main_main3"
+        android:name="dev.kichan.a2023_sunrin_dicon.ui.main.nav.Main3Fragment"
+        android:label="fragment_oneshot"
+        tools:layout="@layout/fragment_main3" />
+    <fragment
+        android:id="@+id/menu_main_more"
+        android:name="dev.kichan.a2023_sunrin_dicon.ui.main.nav.MoreFragment"
+        android:label="fragment_oneshot"
+        tools:layout="@layout/fragment_more" />
+</navigation>

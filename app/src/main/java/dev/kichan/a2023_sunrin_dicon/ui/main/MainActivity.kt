@@ -2,38 +2,35 @@ package dev.kichan.a2023_sunrin_dicon.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import dev.kichan.a2023_sunrin_dicon.R
 import dev.kichan.a2023_sunrin_dicon.base.BaseActivity
 import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMainBinding
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
-import net.daum.mf.map.api.MapView.setMapTilePersistentCacheEnabled
 import java.security.MessageDigest
-import java.text.Format
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    private val fusedLocationClient : FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(this)
-    }
+//    private val fusedLocationClient : FusedLocationProviderClient by lazy {
+//        LocationServices.getFusedLocationProviderClient(this)
+//    }
+//
+//    private val map: MapView by lazy {
+//        MapView(this).apply {
+//            isHDMapTileEnabled = true // HD 설정
+//            setMapTilePersistentCacheEnabled(true) // 맵 타일 캐시 저장
+//            currentLocationTrackingMode =
+//                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading // 지도가 사용자 위치를 따라가도록 설정
+//            setDefaultCurrentLocationMarker() //현위치 마커 기본값 사용
+//        }
+//    }
 
-    private val map: MapView by lazy {
-        MapView(this).apply {
-            isHDMapTileEnabled = true // HD 설정
-            setMapTilePersistentCacheEnabled(true) // 맵 타일 캐시 저장
-            currentLocationTrackingMode =
-                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading // 지도가 사용자 위치를 따라가도록 설정
-            setDefaultCurrentLocationMarker() //현위치 마커 기본값 사용
-        }
-    }
+    private val navController : NavController by lazy { findNavController(R.id.fragment_main) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +44,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE
             )
-        }
-
-        fusedLocationClient.lastLocation.addOnSuccessListener {
-            Log.d("test", it.toString())
         }
     }
 
@@ -67,7 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun initView() = binding.run {
-        mapMain.addView(map)
+        bnvMain.setupWithNavController(navController)
     }
 
     private fun getKakaoKeyHash() {
