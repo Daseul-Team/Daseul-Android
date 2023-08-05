@@ -2,6 +2,7 @@ package dev.kichan.a2023_sunrin_dicon.base
 
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -31,4 +32,8 @@ abstract class BaseActivity<D : ViewDataBinding>(
     }
 
     abstract fun initView()
+
+    protected fun showToast(message : String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }
