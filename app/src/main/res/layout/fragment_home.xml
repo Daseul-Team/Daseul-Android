@@ -13,6 +13,17 @@
         tools:context=".ui.main.nav.HomeFragment">
 
         <Button
+            android:id="@+id/btn_home_gotoMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="지도로 보기"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_home_start"
+            />
+
+        <Button
             android:id="@+id/btn_home_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

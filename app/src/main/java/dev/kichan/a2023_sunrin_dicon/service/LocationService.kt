@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -18,42 +19,69 @@ import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import dev.kichan.a2023_sunrin_dicon.R
+import dev.kichan.a2023_sunrin_dicon.model.data.test.TestReq
+import dev.kichan.a2023_sunrin_dicon.model.repository.TestRepository
 import dev.kichan.a2023_sunrin_dicon.ui.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.round
 
 class LocationService : LifecycleService() {
+    private val testRepository = TestRepository()
+
     private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(this)
     }
 
-    private val notificationManager : NotificationManager by lazy {
+    private val notificationManager: NotificationManager by lazy {
         getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
     private val loationRqeust = LocationRequest.create().apply {
-        interval = 3 * 1000L
-        fastestInterval = 3 * 1000L
+        interval = 5 * 1000L
+        fastestInterval = 5 * 1000L
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
     private val locationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult : LocationResult) {
+        override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
 
-            if(isStart.value!!){
-                for(location in locationResult.locations) {
+            if (isStart.value!!) {
+                for (location in locationResult.locations) {
                     currentLocation.value = location
-                    Toast.makeText(this@LocationService, "위치 업데이트 (${round(location.latitude)}, ${round(location.longitude)})", Toast.LENGTH_SHORT).show()
+                    pointList.add(location)
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        try {
+                            testRepository.test(
+                                TestReq(
+                                    lat = location.latitude,
+                                    lng = location.longitude
+                                )
+                            )
+                        } catch (e: InternalError) {
+                            Log.e("test", e.toString())
+                        }
+                    }
+
+                    Toast.makeText(
+                        this@LocationService,
+                        "위치 업데이트 (${round(location.latitude * 1000) / 1000}, ${round(location.longitude * 1000) / 1000})",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(!isStart.value!!) {
+        if (!isStart.value!!) {
             startForegroundService()
 
-            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            val permissionCheck =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                 fusedLocationProviderClient.requestLocationUpdates(
                     loationRqeust, locationCallback, Looper.getMainLooper()
@@ -61,8 +89,7 @@ class LocationService : LifecycleService() {
             }
 
             isStart.value = true
-        }
-        else {
+        } else {
             stopSelf()
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
 
@@ -74,7 +101,11 @@ class LocationService : LifecycleService() {
 
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun startForegroundService() {
-        val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW)
+        val channel = NotificationChannel(
+            NOTIFICATION_CHANNEL_ID,
+            NOTIFICATION_CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_LOW
+        )
         notificationManager.createNotificationChannel(channel)
 
         val pendingIntent = PendingIntent.getActivity(
@@ -99,12 +130,10 @@ class LocationService : LifecycleService() {
     companion object {
         val isStart = MutableLiveData(false)
         val currentLocation = MutableLiveData<Location?>()
+        val pointList = mutableListOf<Location>()
 
         const val NOTIFICATION_CHANNEL_ID = "location_notification"
         const val NOTIFICATION_CHANNEL_NAME = "location_notification"
         const val NOTIFICATION_ID = 100
-
-//        const val ACTION_START_SERVICE = "action_start_service"
-//        const val ACTION_STOP_SERVICE = "action_stop_service"
     }
 }

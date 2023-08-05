@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810687714231",
+    "project_id": "sunrin-dicon",
+    "storage_bucket": "sunrin-dicon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810687714231:android:c62a0f0a5bc2878a5a0e32",
+        "android_client_info": {
+          "package_name": "dev.kichan.a2023_sunrin_dicon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810687714231-0b5to8rr0v4cp1eumb6pkvfrespaupah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-90AljlPv9lXYqZwKg_UKEW9HfAPTAhI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810687714231-0b5to8rr0v4cp1eumb6pkvfrespaupah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
