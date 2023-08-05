@@ -17,4 +17,8 @@ class Main2Fragment : BaseFragment<FragmentMain2Binding>(R.layout.fragment_main2
 
         return binding.root
     }
+
+    override fun initView() = binding.run {
+
+    }
 }

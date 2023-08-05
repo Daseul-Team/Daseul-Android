@@ -2,6 +2,7 @@ package dev.kichan.a2023_sunrin_dicon.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -14,22 +15,9 @@ import dev.kichan.a2023_sunrin_dicon.R
 import dev.kichan.a2023_sunrin_dicon.base.BaseActivity
 import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMainBinding
 import java.security.MessageDigest
+import java.util.Locale.Builder
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-//    private val fusedLocationClient : FusedLocationProviderClient by lazy {
-//        LocationServices.getFusedLocationProviderClient(this)
-//    }
-//
-//    private val map: MapView by lazy {
-//        MapView(this).apply {
-//            isHDMapTileEnabled = true // HD 설정
-//            setMapTilePersistentCacheEnabled(true) // 맵 타일 캐시 저장
-//            currentLocationTrackingMode =
-//                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading // 지도가 사용자 위치를 따라가도록 설정
-//            setDefaultCurrentLocationMarker() //현위치 마커 기본값 사용
-//        }
-//    }
-
     private val navController : NavController by lazy { findNavController(R.id.fragment_main) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +33,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 LOCATION_PERMISSION_REQUEST_CODE
             )
         }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+            val permissionCheck =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    LOCATION_PERMISSION_REQUEST_CODE
+                )
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -55,7 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-//            map.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(1.0, 1.0), false)
+
         }
     }
 
