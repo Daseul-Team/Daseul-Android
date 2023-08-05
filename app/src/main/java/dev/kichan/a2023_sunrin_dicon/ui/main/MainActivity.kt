@@ -16,20 +16,6 @@ import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMainBinding
 import java.security.MessageDigest
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-//    private val fusedLocationClient : FusedLocationProviderClient by lazy {
-//        LocationServices.getFusedLocationProviderClient(this)
-//    }
-//
-//    private val map: MapView by lazy {
-//        MapView(this).apply {
-//            isHDMapTileEnabled = true // HD 설정
-//            setMapTilePersistentCacheEnabled(true) // 맵 타일 캐시 저장
-//            currentLocationTrackingMode =
-//                MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading // 지도가 사용자 위치를 따라가도록 설정
-//            setDefaultCurrentLocationMarker() //현위치 마커 기본값 사용
-//        }
-//    }
-
     private val navController : NavController by lazy { findNavController(R.id.fragment_main) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

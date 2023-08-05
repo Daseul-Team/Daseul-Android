@@ -28,9 +28,16 @@ abstract class BaseFragment<D : ViewDataBinding>(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(layoutInflater, resId, container, false)
-
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        initView()
+    }
+
+    abstract fun initView()
 }

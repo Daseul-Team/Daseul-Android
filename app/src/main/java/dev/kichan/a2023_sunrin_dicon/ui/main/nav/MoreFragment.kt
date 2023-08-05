@@ -17,4 +17,8 @@ class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
 
         return binding.root
     }
+
+    override fun initView() = binding.run {
+
+    }
 }
