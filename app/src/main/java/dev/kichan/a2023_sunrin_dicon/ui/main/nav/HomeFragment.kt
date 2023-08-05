@@ -33,7 +33,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         super.onCreateView(inflater, container, savedInstanceState)
 
         LocationService.isStart.observe(viewLifecycleOwner, locationStartObserver)
-//        LocationService.currentLocation.observe(viewLifecycleOwner, locationObserver)
 
         return binding.root
     }
@@ -61,23 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
         else {
             binding.btnHomeStart.text = "위치추적 시작"
-        }
-    }
-
-    private val locationObserver : (Location?) -> Unit = {
-        if(it != null){
-            val mapPoint = MapPoint.mapPointWithGeoCoord(it.latitude, it.longitude)
-            val marker = MapPOIItem().apply {
-                setMapPoint(mapPoint)
-                itemName = "${count}번째 위치"
-                tag = 0
-                markerType = MapPOIItem.MarkerType.BluePin;
-                selectedMarkerType = MapPOIItem.MarkerType.RedPin
-            }
-
-            (binding.mapHome[0] as MapView).addPOIItem(marker)
-
-            Log.d("test", it.toString())
         }
     }
 }

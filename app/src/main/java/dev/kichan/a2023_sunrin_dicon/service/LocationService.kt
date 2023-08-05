@@ -31,8 +31,8 @@ class LocationService : LifecycleService() {
     }
 
     private val loationRqeust = LocationRequest.create().apply {
-        interval = 3 * 1000L
-        fastestInterval = 3 * 1000L
+        interval = 2 * 1000L
+        fastestInterval = 2 * 1000L
         priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
 
