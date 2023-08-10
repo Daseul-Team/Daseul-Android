@@ -28,8 +28,8 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="${kakao_map_api_key}" /> <!-- todo:api key 숨기기 -->
-        <!-- 원래는 api key 이렇게 적으면 안되지만 알수없는 버그때문에 local.properties에 api key를 못가져와서 임시로 이렇게 적어둠 -->
+            android:value="${kakao_native_api_key}" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true">

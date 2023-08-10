@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-//        buildConfigField "String", "KAKAO_MAP_API_KEY", properties["kakao_map_api_key"]
+        buildConfigField "String", "KAKAO_MAP_API_KEY", properties["kakao_native_api_key"]
         buildConfigField "String", "BASE_URL", properties["base_url"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
