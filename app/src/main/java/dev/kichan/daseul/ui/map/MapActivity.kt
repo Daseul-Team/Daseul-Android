@@ -1,16 +1,12 @@
-package dev.kichan.a2023_sunrin_dicon.ui.map
+package dev.kichan.daseul.ui.map
 
 import android.graphics.Color
-import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.get
-import dev.kichan.a2023_sunrin_dicon.R
-import dev.kichan.a2023_sunrin_dicon.base.BaseActivity
-import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMapBinding
-import dev.kichan.a2023_sunrin_dicon.service.LocationService
-import net.daum.mf.map.api.MapPOIItem
+import dev.kichan.daseul.R
+import dev.kichan.daseul.base.BaseActivity
+import dev.kichan.daseul.databinding.ActivityMapBinding
+import dev.kichan.daseul.service.LocationService
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapPolyline
 import net.daum.mf.map.api.MapView

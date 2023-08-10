@@ -1,4 +1,4 @@
-package dev.kichan.a2023_sunrin_dicon.base
+package dev.kichan.daseul.base
 
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager

@@ -1,14 +1,14 @@
-package dev.kichan.a2023_sunrin_dicon.ui.main.nav
+package dev.kichan.daseul.ui.main.nav
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dev.kichan.a2023_sunrin_dicon.R
-import dev.kichan.a2023_sunrin_dicon.base.BaseFragment
-import dev.kichan.a2023_sunrin_dicon.databinding.FragmentMain3Binding
+import dev.kichan.daseul.R
+import dev.kichan.daseul.base.BaseFragment
+import dev.kichan.daseul.databinding.FragmentMoreBinding
 
-class Main3Fragment : BaseFragment<FragmentMain3Binding>(R.layout.fragment_main3) {
+class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

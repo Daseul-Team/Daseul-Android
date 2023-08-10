@@ -10,17 +10,17 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
-    namespace 'dev.kichan.a2023_sunrin_dicon'
+    namespace 'dev.kichan.daseul'
     compileSdk 33
 
     defaultConfig {
-        applicationId "dev.kichan.a2023_sunrin_dicon"
+        applicationId "dev.kichan.daseul"
         minSdk 28
         targetSdk 33
         versionCode 1
         versionName "1.0"
 
-//        buildConfigField "String", "KAKAO_MAP_API_KEY", properties["kakao_map_api_key"]
+        buildConfigField "String", "KAKAO_MAP_API_KEY", properties["kakao_native_api_key"]
         buildConfigField "String", "BASE_URL", properties["base_url"]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
