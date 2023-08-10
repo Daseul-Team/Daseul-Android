@@ -1,4 +1,4 @@
-package dev.kichan.a2023_sunrin_dicon.service
+package dev.kichan.daseul.service
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -12,16 +12,15 @@ import android.location.Location
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
-import dev.kichan.a2023_sunrin_dicon.R
-import dev.kichan.a2023_sunrin_dicon.model.data.test.TestReq
-import dev.kichan.a2023_sunrin_dicon.model.repository.TestRepository
-import dev.kichan.a2023_sunrin_dicon.ui.main.MainActivity
+import dev.kichan.daseul.R
+import dev.kichan.daseul.model.data.test.TestReq
+import dev.kichan.daseul.model.repository.TestRepository
+import dev.kichan.daseul.ui.main.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

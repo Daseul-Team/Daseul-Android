@@ -1,4 +1,4 @@
-package dev.kichan.a2023_sunrin_dicon.ui.main
+package dev.kichan.daseul.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -11,11 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import dev.kichan.a2023_sunrin_dicon.R
-import dev.kichan.a2023_sunrin_dicon.base.BaseActivity
-import dev.kichan.a2023_sunrin_dicon.databinding.ActivityMainBinding
+import dev.kichan.daseul.R
+import dev.kichan.daseul.base.BaseActivity
+import dev.kichan.daseul.databinding.ActivityMainBinding
 import java.security.MessageDigest
-import java.util.Locale.Builder
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val navController : NavController by lazy { findNavController(R.id.fragment_main) }

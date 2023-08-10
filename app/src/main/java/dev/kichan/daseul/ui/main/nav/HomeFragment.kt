@@ -1,25 +1,16 @@
-package dev.kichan.a2023_sunrin_dicon.ui.main.nav
+package dev.kichan.daseul.ui.main.nav
 
 import android.content.Intent
-import android.graphics.Color
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
-import dev.kichan.a2023_sunrin_dicon.R
-import dev.kichan.a2023_sunrin_dicon.base.BaseFragment
-import dev.kichan.a2023_sunrin_dicon.databinding.FragmentHomeBinding
-import dev.kichan.a2023_sunrin_dicon.service.LocationService
-import dev.kichan.a2023_sunrin_dicon.ui.map.MapActivity
-import net.daum.mf.map.api.MapPOIItem
+import dev.kichan.daseul.R
+import dev.kichan.daseul.base.BaseFragment
+import dev.kichan.daseul.databinding.FragmentHomeBinding
+import dev.kichan.daseul.service.LocationService
+import dev.kichan.daseul.ui.map.MapActivity
 import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapPolyline
-import net.daum.mf.map.api.MapView
-import net.daum.mf.map.api.MapView.setMapTilePersistentCacheEnabled
-import kotlin.math.round
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     val locationList = mutableListOf<MapPoint>()

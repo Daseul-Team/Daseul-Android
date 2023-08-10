@@ -1,6 +1,6 @@
-package dev.kichan.a2023_sunrin_dicon.model
+package dev.kichan.daseul.model
 
-import dev.kichan.a2023_sunrin_dicon.BuildConfig
+import dev.kichan.daseul.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

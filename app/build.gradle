@@ -10,11 +10,11 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
-    namespace 'dev.kichan.a2023_sunrin_dicon'
+    namespace 'dev.kichan.daseul'
     compileSdk 33
 
     defaultConfig {
-        applicationId "dev.kichan.a2023_sunrin_dicon"
+        applicationId "dev.kichan.daseul"
         minSdk 28
         targetSdk 33
         versionCode 1

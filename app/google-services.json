@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:810687714231:android:c62a0f0a5bc2878a5a0e32",
+        "mobilesdk_app_id": "1:810687714231:android:13cfd287a90cc83a5a0e32",
         "android_client_info": {
-          "package_name": "dev.kichan.a2023_sunrin_dicon"
+          "package_name": "dev.kichan.daseul"
         }
       },
       "oauth_client": [
