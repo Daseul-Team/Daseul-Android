@@ -7,19 +7,64 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dev.kichan.daseul.BuildConfig
+import dev.kichan.daseul.BuildConfig.BASE_URL
 import dev.kichan.daseul.R
 import dev.kichan.daseul.databinding.ActivityRegisterBinding
+import dev.kichan.daseul.model.service.Oauth
 import dev.kichan.daseul.ui.main.MainActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class RegisterActivity : AppCompatActivity() {
     private val mContext: Context = this
     private lateinit var binding: ActivityRegisterBinding
+
+    private lateinit var Username:String
+    private lateinit var Usernumber:String
+
+
+    private suspend fun sendoath(useroauth : String) {
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(Oauth::class.java)
+
+        service.postuseroauth(useroauth).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("dasulapi","API FAIL")
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.d("dasulapi", response.body().toString())
+
+            }
+        })
+    }
+    fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.to_right, R.anim.from_right)
+            .replace(R.id.fragment, fragment)
+            .commit()
+    }
+    fun savename(name: String) {
+        Username = name
+    }
+    fun savenumber(phonenumber: String) {
+        Usernumber = phonenumber
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +81,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("LOGIN", "카카오계정으로 로그인 실패", error)
                 } else if (token != null) {
                     Log.i("LOGIN", "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    val intent = Intent(mContext, MainActivity::class.java)
-                    startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
-                    finish()
+                    replaceFragment(Register1Fragment())
                 }
             }
             val context = this
