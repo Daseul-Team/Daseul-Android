@@ -10,5 +10,5 @@ interface KaKaoservice {
     @POST("/v1/account/oauth/kakao")
     @Headers("accept: application/json",
         "content-type: application/json")
-    suspend fun postuseroauth(@Body body : kakaoOauth) : Call<String>
+    fun postuseroauth(@Body body : kakaoOauth) : Call<String>
 }

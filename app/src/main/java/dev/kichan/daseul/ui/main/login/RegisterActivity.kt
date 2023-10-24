@@ -40,11 +40,11 @@ class RegisterActivity : AppCompatActivity() {
             .build()
 
         val service = retrofit.create(KaKaoservice::class.java)
-        val userdata = kakaoOauth(useroauthaccess, useroauthrefresh)
+        val userdat = kakaoOauth(useroauthaccess, useroauthrefresh)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                service.postuseroauth(userdata).enqueue(object : Callback<String> {
+        /*CoroutineScope(Dispatchers.IO).launch {
+            try {*/
+                service.postuseroauth(userdat).enqueue(object : Callback<String> {
                     override fun onFailure(call: Call<String>, t: Throwable) {
                         Log.d("dasulapi", "API FAIL")
                     }
@@ -53,11 +53,11 @@ class RegisterActivity : AppCompatActivity() {
                         Log.d("dasulapi", response.body().toString())
                     }
                 })
-            }
-            catch (e: Exception){
-                Log.e("service cor", e.message.toString())
-            }
+        /*}
+        catch (e: Exception){
+            Log.e("service cor", e.message.toString())
         }
+        }*/
 
 
     }
