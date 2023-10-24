@@ -1,24 +1,25 @@
 package dev.kichan.daseul.ui.main.login
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.fragment.app.Fragment
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import dev.kichan.daseul.BuildConfig
-import dev.kichan.daseul.BuildConfig.BASE_URL
+import dev.kichan.daseul.BuildConfig.kakao_native_api_key
 import dev.kichan.daseul.R
 import dev.kichan.daseul.databinding.ActivityRegisterBinding
-import dev.kichan.daseul.model.service.Oauth
+import dev.kichan.daseul.model.data.test.kakaoOauth
+import dev.kichan.daseul.model.service.KaKaoservice
 import dev.kichan.daseul.ui.main.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,30 +29,37 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RegisterActivity : AppCompatActivity() {
     private val mContext: Context = this
     private lateinit var binding: ActivityRegisterBinding
-
     private lateinit var Username:String
     private lateinit var Usernumber:String
 
 
-    private suspend fun sendoath(useroauth : String) {
-
+    private fun sendoath(useroauthaccess : String, useroauthrefresh : String,) {
         val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl("https://api.daseul.deltalab.dev/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(Oauth::class.java)
+        val service = retrofit.create(KaKaoservice::class.java)
+        val userdata = kakaoOauth(useroauthaccess, useroauthrefresh)
 
-        service.postuseroauth(useroauth).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("dasulapi","API FAIL")
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                service.postuseroauth(userdata).enqueue(object : Callback<String> {
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Log.d("dasulapi", "API FAIL")
+                    }
+
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        Log.d("dasulapi", response.body().toString())
+                    }
+                })
             }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.d("dasulapi", response.body().toString())
-
+            catch (e: Exception){
+                Log.e("service cor", e.message.toString())
             }
-        })
+        }
+
+
     }
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
@@ -72,7 +80,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        KakaoSdk.init(this, "26bbb798fbce3d95935ccc85721c8322")
+        KakaoSdk.init(this, kakao_native_api_key)
 
         binding.btnKakaologin.setOnClickListener {
 
@@ -81,6 +89,7 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("LOGIN", "카카오계정으로 로그인 실패", error)
                 } else if (token != null) {
                     Log.i("LOGIN", "카카오계정으로 로그인 성공 ${token.accessToken}")
+                    sendoath(token.accessToken, token.refreshToken)
                     replaceFragment(Register1Fragment())
                 }
             }
@@ -93,7 +102,6 @@ class RegisterActivity : AppCompatActivity() {
                         if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                             return@loginWithKakaoTalk
                         }
-
                         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                     } else if (token != null) {
                         Log.i("LOGIN", "카카오톡으로 로그인 성공 ${token.accessToken}")
@@ -105,10 +113,6 @@ class RegisterActivity : AppCompatActivity() {
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
             }
-
-
         }
-
-
     }
 }
