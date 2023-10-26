@@ -20,6 +20,7 @@ class Register2Fragment : Fragment() {
         binding.btNext.setOnClickListener {
             (activity as RegisterActivity).replaceFragment(RegisterCompleteFragment())
             (activity as RegisterActivity).savenumber(binding.etNumber.text.toString())
+            (activity as RegisterActivity).registerpost()
         }
 
         return binding.root
