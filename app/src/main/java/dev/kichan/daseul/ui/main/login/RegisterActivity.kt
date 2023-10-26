@@ -1,10 +1,10 @@
 package dev.kichan.daseul.ui.main.login
 
-import android.content.Intent
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
@@ -14,53 +14,96 @@ import com.kakao.sdk.user.UserApiClient
 import dev.kichan.daseul.BuildConfig.kakao_native_api_key
 import dev.kichan.daseul.R
 import dev.kichan.daseul.databinding.ActivityRegisterBinding
+import dev.kichan.daseul.model.RetrofitClient
+import dev.kichan.daseul.model.data.test.CommonRes
+import dev.kichan.daseul.model.data.test.RegisterReq
 import dev.kichan.daseul.model.data.test.kakaoOauth
+import dev.kichan.daseul.model.data.test.kakaoOauthres
 import dev.kichan.daseul.model.service.KaKaoservice
 import dev.kichan.daseul.ui.main.MainActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+
 
 class RegisterActivity : AppCompatActivity() {
     private val mContext: Context = this
     private lateinit var binding: ActivityRegisterBinding
-    private lateinit var Username:String
+    lateinit var Username:String
     private lateinit var Usernumber:String
+    private lateinit var useroauthaccess: String
+    private lateinit var useroauthrefresh: String
 
 
-    private fun sendoath(useroauthaccess : String, useroauthrefresh : String,) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.daseul.deltalab.dev/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun registerpost() {
+        val service = RetrofitClient.getRetrofit().create(KaKaoservice::class.java)
 
-        val service = retrofit.create(KaKaoservice::class.java)
-        val userdat = kakaoOauth(useroauthaccess, useroauthrefresh)
+        val useroauthob = kakaoOauth(useroauthaccess, useroauthrefresh)
+        val userdat = RegisterReq(Username, Usernumber, useroauthob)
 
-        /*CoroutineScope(Dispatchers.IO).launch {
-            try {*/
-                service.postuseroauth(userdat).enqueue(object : Callback<String> {
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        Log.d("dasulapi", "API FAIL")
+        service.UserRegister(userdat).enqueue(object : Callback<CommonRes> {
+            override fun onFailure(call: Call<CommonRes>, t: Throwable) {
+                Log.d("dasulapi", "API FAIL: ${call}")
+            }
+            override fun onResponse(
+                call: Call<CommonRes>,
+                response: Response<CommonRes>
+            ) {
+                if (response.isSuccessful()) {
+                    Log.d("dasulapi", "isSuccessful() : " + response.code());
+                }
+                else
+                {
+                    try { val body = response.errorBody()!!.string()
+                        Log.d("dasulapi", "error - body : $body")
+                    } catch (e: IOException) {
+                        e.printStackTrace()
                     }
-
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        Log.d("dasulapi", response.body().toString())
-                    }
-                })
-        /*}
-        catch (e: Exception){
-            Log.e("service cor", e.message.toString())
-        }
-        }*/
-
-
+                }
+            }
+        })
     }
+    fun loginpost() {
+        val loginservice = RetrofitClient.getRetrofit().create(KaKaoservice::class.java)
+
+        val useroauth = kakaoOauth(useroauthaccess, useroauthrefresh)
+
+        loginservice.postuseroauth(useroauth).enqueue(object : Callback<kakaoOauthres> {
+            override fun onFailure(call: Call<kakaoOauthres>, t: Throwable) {
+                Log.d("dasulapi", "API FAIL: ${call}")
+            }
+            override fun onResponse(
+                call: Call<kakaoOauthres>,
+                response: Response<kakaoOauthres>
+            ) {
+                if (response.isSuccessful()) {
+                    Log.d("dasulapi", "isSuccessful() : " + response.code());
+                    if (response.code() == 404)
+                    {
+                        replaceFragment(Register1Fragment())
+                    }
+                    else if (response.code() == 200)
+                    {
+                        val intent = Intent(mContext, MainActivity::class.java)
+                        startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
+                        finish()
+                    }
+                }
+                else
+                {
+                    try { val body = response.errorBody()!!.string()
+                        Log.d("dasulapi", "error - body : $body")
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        })
+    }
+
     fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.to_right, R.anim.from_right)
@@ -89,8 +132,9 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("LOGIN", "카카오계정으로 로그인 실패", error)
                 } else if (token != null) {
                     Log.i("LOGIN", "카카오계정으로 로그인 성공 ${token.accessToken}")
-                    sendoath(token.accessToken, token.refreshToken)
-                    replaceFragment(Register1Fragment())
+                    useroauthaccess= token.accessToken
+                    useroauthrefresh =  token.refreshToken
+                    loginpost()
                 }
             }
             val context = this
@@ -104,10 +148,10 @@ class RegisterActivity : AppCompatActivity() {
                         }
                         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                     } else if (token != null) {
+                        useroauthaccess= token.accessToken
+                        useroauthrefresh =  token.refreshToken
+                        loginpost()
                         Log.i("LOGIN", "카카오톡으로 로그인 성공 ${token.accessToken}")
-                        val intent = Intent(mContext, MainActivity::class.java)
-                        startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
-                        finish()
                     }
                 }
             } else {
