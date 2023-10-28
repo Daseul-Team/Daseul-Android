@@ -24,9 +24,8 @@ import dev.kichan.daseul.ui.main.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import kotlin.math.log
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -36,8 +35,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var Usernumber:String
     private lateinit var useroauthaccess: String
     private lateinit var useroauthrefresh: String
-
-
     fun registerpost() {
         val service = RetrofitClient.getRetrofit().create(KaKaoservice::class.java)
 
@@ -81,6 +78,7 @@ class RegisterActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful()) {
                     Log.d("dasulapi", "isSuccessful() : " + response.code());
+                    Log.d("fortest", response.body().toString())
                     if (response.code() == 404)
                     {
                         replaceFragment(Register1Fragment())
@@ -94,7 +92,18 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 else
                 {
-                    try { val body = response.errorBody()!!.string()
+                    try {
+                        if (response.code() == 404)
+                        {
+                            replaceFragment(Register1Fragment())
+                        }
+                        if (response.code() == 200)
+                        {
+                            val intent = Intent(mContext, MainActivity::class.java)
+                            startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
+                            finish()
+                        }
+                        val body = response.errorBody()!!.string()
                         Log.d("dasulapi", "error - body : $body")
                     } catch (e: IOException) {
                         e.printStackTrace()
@@ -132,8 +141,10 @@ class RegisterActivity : AppCompatActivity() {
                     Log.e("LOGIN", "카카오계정으로 로그인 실패", error)
                 } else if (token != null) {
                     Log.i("LOGIN", "카카오계정으로 로그인 성공 ${token.accessToken}")
+
                     useroauthaccess= token.accessToken
                     useroauthrefresh =  token.refreshToken
+                    Log.d("fortest","결과 = "+token.accessToken)
                     loginpost()
                 }
             }
@@ -150,8 +161,15 @@ class RegisterActivity : AppCompatActivity() {
                     } else if (token != null) {
                         useroauthaccess= token.accessToken
                         useroauthrefresh =  token.refreshToken
+
+                        val sharedPreference = getSharedPreferences("Group_Info", 0)
+                        val editor = sharedPreference.edit()
+                        editor.putString("token",token.accessToken)
+                        editor.apply()
+
                         loginpost()
                         Log.i("LOGIN", "카카오톡으로 로그인 성공 ${token.accessToken}")
+
                     }
                 }
             } else {
