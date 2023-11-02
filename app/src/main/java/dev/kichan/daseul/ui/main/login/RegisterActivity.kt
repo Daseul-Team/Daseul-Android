@@ -78,29 +78,28 @@ class RegisterActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful()) {
                     Log.d("dasulapi", "isSuccessful() : " + response.code());
-                    Log.d("fortest", response.body().toString())
-                    if (response.code() == 404)
-                    {
+                    if (response.code() == 404) {
                         replaceFragment(Register1Fragment())
-                    }
-                    else if (response.code() == 200)
-                    {
+                    } else if (response.code() == 200) {
+                        val accessToken = response.body()?.access_token
+
+                        val sharedPreference = getSharedPreferences("Group_Info", 0)
+                        val editor = sharedPreference.edit()
+                        editor.putString("token",accessToken)
+                        editor.apply()
+
                         val intent = Intent(mContext, MainActivity::class.java)
-                        startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
+                        startActivity(intent)
                         finish()
                     }
-                }
-                else
-                {
+                } else {
                     try {
-                        if (response.code() == 404)
-                        {
+                        if (response.code() == 404) {
                             replaceFragment(Register1Fragment())
                         }
-                        if (response.code() == 200)
-                        {
+                        if (response.code() == 200) {
                             val intent = Intent(mContext, MainActivity::class.java)
-                            startActivity(intent/*.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)*/)
+                            startActivity(intent)
                             finish()
                         }
                         val body = response.errorBody()!!.string()
@@ -161,11 +160,6 @@ class RegisterActivity : AppCompatActivity() {
                     } else if (token != null) {
                         useroauthaccess= token.accessToken
                         useroauthrefresh =  token.refreshToken
-
-                        val sharedPreference = getSharedPreferences("Group_Info", 0)
-                        val editor = sharedPreference.edit()
-                        editor.putString("token",token.accessToken)
-                        editor.apply()
 
                         loginpost()
                         Log.i("LOGIN", "카카오톡으로 로그인 성공 ${token.accessToken}")

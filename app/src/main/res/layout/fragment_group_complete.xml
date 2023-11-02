@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.main.nav.group.GroupCompleteFragment"
+    tools:context=".ui.main.group.GroupCompleteFragment"
     >
 
     <TextView
@@ -37,6 +37,7 @@
             android:src="@drawable/icon_paticipate_project"
             />
         <TextView
+            android:id="@+id/txt_invite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="dummy data"
@@ -44,5 +45,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+    <ImageView
+        android:src="@drawable/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/next_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

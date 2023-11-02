@@ -8,12 +8,13 @@ data class data_create(
     val id: UUID
 
 )
+data class data_hash_img(
+    @SerializedName("hash")
+    val hash: String
+)
 data class data_invite(
-    @SerializedName("group_id")
-    val group_id: UUID,
-
     @SerializedName("id")
-    val id: String
+    val group_id: UUID,
 )
 data class data_info(
     @SerializedName("group_id")

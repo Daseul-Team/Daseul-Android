@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import dev.kichan.daseul.R
 import dev.kichan.daseul.base.BaseFragment
 import dev.kichan.daseul.databinding.FragmentMain3Binding
-import dev.kichan.daseul.ui.main.nav.group.Group_MainActivity
+import dev.kichan.daseul.ui.main.group.Group_MainActivity
 
 class Main3Fragment : BaseFragment<FragmentMain3Binding>(R.layout.fragment_main3) {
     override fun onCreateView(
