@@ -35,7 +35,7 @@ interface Group {
     @POST("/v1/group/invite/create")
     fun convertInvite(
         @Header("Authorization") accessToken: String,
-        @Field("group_id") hashkey : UUID,
+        @Field("group_id") hashkey : String,
     ): Call<data_invite>
 
 
