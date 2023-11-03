@@ -43,7 +43,9 @@
             android:text="dummy data"
             app:layout_constraintTop_toBottomOf="@+id/img_qr"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="#FF0000"
+            android:textSize="20dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <ImageView
         android:src="@drawable/btn_next"

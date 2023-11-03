@@ -13,8 +13,11 @@ data class data_hash_img(
     val hash: String
 )
 data class data_invite(
-    @SerializedName("id")
-    val group_id: UUID,
+    @SerializedName("token")
+    val invite_id: String,
+)
+data class data_invite_body(
+    val group_id: String
 )
 data class data_info(
     @SerializedName("group_id")
