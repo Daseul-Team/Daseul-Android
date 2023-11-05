@@ -1,60 +1,34 @@
 package dev.kichan.daseul.ui.main.group
 
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import dev.kichan.daseul.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [inviteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class inviteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_invite, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment inviteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            inviteFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        val view = inflater.inflate(R.layout.fragment_invite, container, false)
+        var txt_invite = view.findViewById<EditText>(R.id.txt_invite)
+        var btn_next = view.findViewById<ImageView>(R.id.next_btn)
+        btn_next.setOnClickListener {
+            if(txt_invite.text.isNullOrEmpty()){
+                Toast.makeText(context,"참가코드를 입력해주세요",Toast.LENGTH_SHORT).show()
+            }else{
+                if (activity is Group_MainActivity) {
+                    (activity as Group_MainActivity).JoinGroup(txt_invite.text.toString())
                 }
             }
+        }
+
+        return view
     }
 }

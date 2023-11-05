@@ -25,6 +25,8 @@ class Project_ImgFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_project__img, container, false)
         var upload_bgn = view.findViewById<ImageView>(R.id.btn_upload)
         var next_btn = view.findViewById<ImageView>(R.id.next_btn)
+        val name_value = arguments?.getString("key_name")
+        Log.d("fortest","이미지 프레그먼트로 받아온 이름 = "+name_value)
         upload_bgn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -32,7 +34,7 @@ class Project_ImgFragment : Fragment() {
         }
         next_btn.setOnClickListener {
             val activity = requireActivity() as Group_MainActivity// 액티비티 형 변환
-            activity.return_imgkey()
+            activity.return_imgkey(name_value.toString())
 //                activity.Retrofit_MakeGroup()
         }
 

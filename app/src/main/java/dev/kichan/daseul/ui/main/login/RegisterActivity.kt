@@ -113,6 +113,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun replaceFragment(fragment: Fragment) {
+
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(R.anim.to_right, R.anim.from_right)
             .replace(R.id.fragment, fragment)

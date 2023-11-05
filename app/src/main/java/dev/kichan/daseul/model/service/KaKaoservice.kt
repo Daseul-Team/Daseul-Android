@@ -10,12 +10,12 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface KaKaoservice {
-    @POST("/v1/account/oauth/kakao")
+    @POST("account/oauth/kakao")
     @Headers("accept: application/json",
         "content-type: application/json")
     fun postuseroauth(@Body body : kakaoOauth) : Call<kakaoOauthres>
 
-    @POST("/v1/account/register/kakao")
+    @POST("account/register/kakao")
     @Headers("accept: application/json",
         "content-type: application/json")
     fun UserRegister(@Body body : RegisterReq) : Call<CommonRes>

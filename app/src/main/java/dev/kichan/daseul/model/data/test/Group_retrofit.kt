@@ -6,7 +6,10 @@ import java.util.UUID
 data class data_create(
     @SerializedName("id")
     val id: UUID
-
+)
+data class make_group(
+    var name : String,
+    var image : String
 )
 data class data_hash_img(
     @SerializedName("hash")
@@ -19,17 +22,30 @@ data class data_invite(
 data class data_invite_body(
     val group_id: String
 )
-data class data_info(
-    @SerializedName("group_id")
-    val group_id: UUID,
+data class joinGroup(
+    val token: String
+)
+data class data_infoGroup(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("image")
+    val image: String,
+    @SerializedName("participants")
+    var who: List<String>,
 
-    @SerializedName("group_name")
-    val group_name: String,
-
-    @SerializedName("invited_by")
-    val invited_by: UUID,
-
-    @SerializedName("invited_by_name")
-    val invited_by_name: UUID
-
+    val group_id: String
+)
+data class recycle_item(
+    var imageHash : String,
+    var name : String
+)
+data class getuserInfo(
+    val group_id: String,
+    val participant_id: String
+)
+data class getReturnUserInfo(
+    @SerializedName("name")
+    var name : String,
+    @SerializedName("owner")
+    var owner : Boolean
 )

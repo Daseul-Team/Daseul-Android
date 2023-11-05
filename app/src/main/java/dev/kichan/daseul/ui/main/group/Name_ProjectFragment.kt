@@ -26,18 +26,17 @@ class Name_ProjectFragment : Fragment() {
             if (name_edit.text.isNullOrEmpty()) {
                 Toast.makeText(context, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
             } else{
-                val bundle = Bundle()
-                bundle.putString("key_name", name_edit.text.toString())
-                if (activity is Group_MainActivity) {
-                    (activity as Group_MainActivity).receiveDataFromFragment(bundle)
-                }
 //                val bundle = Bundle()
-//                bundle.putString("key_name",name_edit.text.toString())
+//                bundle.putString("key_name", name_edit.text.toString())
+//                val myActivity = activity as Group_MainActivity
+//                myActivity.get_GroupName(bundle)
+                val bundle = Bundle()
+                bundle.putString("key_name",name_edit.text.toString())
                 Log.d("fortest","이름:"+name_edit.text.toString())
                 val fragmentManager = requireActivity().supportFragmentManager
                 val transaction = fragmentManager.beginTransaction()
                 val newFragment = Project_ImgFragment()
-//                newFragment.arguments = bundle
+                newFragment.arguments = bundle
                 transaction.replace(R.id.group_frame, newFragment)
                 transaction.commit()
             }

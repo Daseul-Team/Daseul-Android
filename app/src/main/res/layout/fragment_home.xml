@@ -11,6 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.nav.HomeFragment">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="프로젝트 없음"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30dp"
+            android:id="@+id/value_group"
+            />
 
         <Button
             android:id="@+id/btn_home_gotoMap"
@@ -44,6 +53,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

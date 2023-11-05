@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface TestService {
-    @POST("/v1/ingest/location")
+    @POST("ingest/location")
     suspend fun testLocation(@Body body : TestReq) : Response<TestRes>
 }

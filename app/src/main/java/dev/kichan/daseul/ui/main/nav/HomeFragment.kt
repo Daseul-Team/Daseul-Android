@@ -9,6 +9,8 @@ import dev.kichan.daseul.R
 import dev.kichan.daseul.base.BaseFragment
 import dev.kichan.daseul.databinding.FragmentHomeBinding
 import dev.kichan.daseul.service.LocationService
+import dev.kichan.daseul.ui.main.MainActivity
+import dev.kichan.daseul.ui.main.group.Group_MainActivity
 import dev.kichan.daseul.ui.map.MapActivity
 import net.daum.mf.map.api.MapPoint
 
@@ -37,6 +39,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         btnHomeGotoMap.setOnClickListener {
             val intent = Intent(requireContext(), MapActivity::class.java)
             startActivity(intent)
+        }
+        valueGroup.setOnClickListener {
+            (activity as MainActivity).showGroupList()
         }
     }
 

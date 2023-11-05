@@ -16,10 +16,11 @@ abstract class BaseFragment<D : ViewDataBinding>(
     @LayoutRes
     val resId : Int
 ) : Fragment() {
-    protected lateinit var binding : D
+    protected lateinit var binding: D
 
     protected fun hideKeyboard() {
-        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
@@ -28,7 +29,7 @@ abstract class BaseFragment<D : ViewDataBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, resId, container, false)
+        binding = DataBindingUtil.inflate(inflater, resId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
         initView()
@@ -41,3 +42,5 @@ abstract class BaseFragment<D : ViewDataBinding>(
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }
+
+
