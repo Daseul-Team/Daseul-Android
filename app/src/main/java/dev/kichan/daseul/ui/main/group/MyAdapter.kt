@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import dev.kichan.daseul.BuildConfig
 import dev.kichan.daseul.R
 import dev.kichan.daseul.model.RetrofitClient
@@ -48,10 +50,11 @@ class MyAdapter(private var items: List<data_infoGroup>, private val token: Stri
 
         Glide.with(holder.itemView.context)
             .load(glideUrl)
-            .override(300, 300)
+            .override(200, 200)
+            .transform(CenterCrop(), CircleCrop())
             .into(holder.itemImage)
         holder.itemName.text = item.name
-        holder.itemWho.text = item.who.joinToString(", ")
+        holder.itemWho.text = item.who.joinToString("\n")
     }
 
     override fun getItemCount(): Int {

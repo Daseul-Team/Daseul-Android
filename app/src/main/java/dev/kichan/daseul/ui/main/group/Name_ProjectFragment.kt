@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -20,7 +21,7 @@ class Name_ProjectFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_name__project, container, false)
         var name_edit = view.findViewById<EditText>(R.id.input_name)
-        var btn_next = view.findViewById<ImageView>(R.id.next_btn)
+        var btn_next = view.findViewById<Button>(R.id.next_btn)
 
         btn_next.setOnClickListener {
             if (name_edit.text.isNullOrEmpty()) {

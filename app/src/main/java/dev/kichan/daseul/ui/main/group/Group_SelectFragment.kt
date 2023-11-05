@@ -31,7 +31,6 @@ class Group_SelectFragment : Fragment() {
             transaction.replace(R.id.group_frame, newFragment)
             transaction.commit()
         }
-
         return view
     }
 }
