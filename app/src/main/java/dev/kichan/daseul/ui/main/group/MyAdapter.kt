@@ -5,21 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.module.AppGlideModule
 import dev.kichan.daseul.BuildConfig
 import dev.kichan.daseul.R
 import dev.kichan.daseul.model.RetrofitClient
 import dev.kichan.daseul.model.data.test.data_infoGroup
 import org.w3c.dom.Text
-
-class MyAdapter(private var items: List<data_infoGroup>, private val token: String) :
+interface OnItemClickListener {
+    fun onItemClick(item: data_infoGroup)
+}
+@GlideModule
+class MyAdapter(private var items: List<data_infoGroup>, private val token: String, private val clickListener: OnItemClickListener) :
     RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -53,8 +59,13 @@ class MyAdapter(private var items: List<data_infoGroup>, private val token: Stri
             .override(200, 200)
             .transform(CenterCrop(), CircleCrop())
             .into(holder.itemImage)
+
         holder.itemName.text = item.name
         holder.itemWho.text = item.who.joinToString("\n")
+
+        holder.itemView.setOnClickListener {
+            clickListener.onItemClick(item)
+        }
     }
 
     override fun getItemCount(): Int {

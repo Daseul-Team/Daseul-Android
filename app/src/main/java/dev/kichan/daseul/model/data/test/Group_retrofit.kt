@@ -1,6 +1,7 @@
 package dev.kichan.daseul.model.data.test
 
 import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.Since
 import java.util.UUID
 
 data class data_create(
@@ -35,10 +36,6 @@ data class data_infoGroup(
 
     val group_id: String
 )
-data class recycle_item(
-    var imageHash : String,
-    var name : String
-)
 data class getuserInfo(
     val group_id: String,
     val participant_id: String
@@ -48,4 +45,12 @@ data class getReturnUserInfo(
     var name : String,
     @SerializedName("owner")
     var owner : Boolean
+)
+data class getInviteInfo(
+    @SerializedName("group_name")
+    var Group_name : String,
+    @SerializedName("gruop_image")
+    var Group_img : String,
+    @SerializedName("invited_by_name")
+    var Group_name_by : String
 )

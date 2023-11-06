@@ -11,13 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
-        
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            app:title="잡았다 요놈"
+            android:drawableEnd="@drawable/ic_arrow_back_ios"
+            app:title="프로젝트 없음"
+
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

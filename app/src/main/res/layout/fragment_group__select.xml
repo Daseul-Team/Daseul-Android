@@ -4,29 +4,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.main.group.Group_SelectFragment">
+    tools:context=".ui.main.group.Group_SelectFragment"
+    android:theme="@style/font_Suite"
+    >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="어떻게 추가할건가요?"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/title"
-            android:textSize="30dp"
+            android:textSize="20dp"
+            android:layout_margin="20dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
             />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_make_project"
+
+        <LinearLayout
             android:id="@+id/btn_make"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            />
+            android:background="@drawable/round"
+            android:backgroundTint="#F6F6F6"
+            android:gravity="center_vertical"
+            android:padding="24dp"
+            >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/groups" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="프로젝트 만들기"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="직접 팀장이 되어 프로젝트를 만듭니다." />
+
+        </LinearLayout>
+
+        <LinearLayout
+    android:layout_width="300dp"
+    android:layout_height="150dp"
+    android:id="@+id/btn_participants"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/btn_make"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/round"
+            android:backgroundTint="#F6F6F6"
+            android:padding="24dp"
+    >
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_paticipate_project"
-            android:id="@+id/btn_participate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_make"/>
+                android:src="@drawable/icon_join"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:text="초대 코드 입력하기"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:text="초대코드를 입력하여 프로제그에 합류합니다"/>
+
+</LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

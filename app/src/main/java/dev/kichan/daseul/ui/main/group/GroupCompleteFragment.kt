@@ -28,10 +28,10 @@ class GroupCompleteFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_group_complete, container, false)
         val invite_id = arguments?.getString("key_invite")
-
+        val barcodeValue = "dasuel://invite?token="+invite_id
         // QR 코드 생성
         val writer = QRCodeWriter()
-        val bitMatrix: BitMatrix = writer.encode(invite_id, BarcodeFormat.QR_CODE, 400, 400)
+        val bitMatrix: BitMatrix = writer.encode(barcodeValue, BarcodeFormat.QR_CODE, 400, 400)
         val width = bitMatrix.width
         val height = bitMatrix.height
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -51,7 +51,6 @@ class GroupCompleteFragment : Fragment() {
         view.findViewById<TextView>(R.id.txt_invite).text = invite_id
         view.findViewById<Button>(R.id.next_btn).setOnClickListener{
             var intent = Intent(context, MainActivity::class.java)
-            intent.putExtra("return_value", 1)
             startActivity(intent)
         }
         return view

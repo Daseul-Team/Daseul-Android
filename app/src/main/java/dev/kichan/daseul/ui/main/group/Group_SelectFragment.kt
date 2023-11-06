@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import dev.kichan.daseul.R
 class Group_SelectFragment : Fragment() {
     override fun onCreateView(
@@ -15,8 +16,8 @@ class Group_SelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         var view = inflater.inflate(R.layout.fragment_group__select, container, false)
-        var btn_make = view.findViewById<ImageView>(R.id.btn_make)
-        var btn_participate = view.findViewById<ImageView>(R.id.btn_participate)
+        var btn_make = view.findViewById<LinearLayout>(R.id.btn_make)
+        var btn_participate = view.findViewById<LinearLayout>(R.id.btn_participants)
         btn_make.setOnClickListener{
             val fragmentManager = requireActivity().supportFragmentManager
             val transaction = fragmentManager.beginTransaction()

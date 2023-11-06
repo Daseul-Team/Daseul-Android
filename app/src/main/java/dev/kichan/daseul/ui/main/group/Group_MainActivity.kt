@@ -1,6 +1,7 @@
 package dev.kichan.daseul.ui.main.group
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint.Join
 import android.net.Uri
 import android.os.Bundle
@@ -17,6 +18,7 @@ import dev.kichan.daseul.model.data.test.data_hash_img
 import dev.kichan.daseul.model.data.test.data_infoGroup
 import dev.kichan.daseul.model.data.test.data_invite
 import dev.kichan.daseul.model.data.test.data_invite_body
+import dev.kichan.daseul.model.data.test.getInviteInfo
 import dev.kichan.daseul.model.data.test.joinGroup
 import dev.kichan.daseul.model.data.test.make_group
 import dev.kichan.daseul.model.service.Group
@@ -193,13 +195,48 @@ class Group_MainActivity : AppCompatActivity() {
 
     }
 
+    fun getGroupInfo(invite_code :String){
+        val service = retrofit.create(Group::class.java)
+        var Token = "Bearer "+getSharedPreferences("Group_Info", 0).getString("token", "")
+        val call: Call<getInviteInfo> = service.getInviteInfo(Token,invite_code)
+        call.enqueue(object : Callback<getInviteInfo> {
+            override fun onResponse(call: Call<getInviteInfo>, response: Response<getInviteInfo>) {
+                if (response.isSuccessful) {
+                    var InviteGroupInfo = arrayListOf(response.body()!!.Group_name,response.body()!!.Group_img,response.body()!!.Group_name_by,invite_code)
+                    val bundle = Bundle()
+                    bundle.putStringArrayList("deep_data",ArrayList(InviteGroupInfo))
+                    bundle.putString("key_Token",Token)
+                    val fragment = GroupInfoFragment()
+                    fragment.arguments = bundle // 프래그먼트에 번들 설정
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.group_frame, fragment)
+                        .commit()
+                } else {
+                    // 요청이 실패한 경우
+                    val body = response.errorBody()!!.string()
+                    Log.d("Group_test", "error - body : $body")
+                }
+            }
+
+            override fun onFailure(call: Call<getInviteInfo>, t: Throwable) {
+                // 네트워크 오류 또는 예외 처리
+            }
+        })
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val action: String? = intent?.action
+        val data: Uri? = intent?.data
+        if (action == Intent.ACTION_VIEW) {
+            val invite_code = data?.getQueryParameter("token")
+            setContentView(R.layout.activity_group_main)
+            getGroupInfo(invite_code.toString())
+        }else {
 
-        setContentView(R.layout.activity_group_main)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.group_frame, Group_SelectFragment())
-            .commit()
-
+            setContentView(R.layout.activity_group_main)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.group_frame, Group_SelectFragment())
+                .commit()
+        }
     }
 }

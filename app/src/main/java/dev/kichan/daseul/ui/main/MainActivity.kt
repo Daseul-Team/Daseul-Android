@@ -78,8 +78,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main){
 
     override fun initView() = binding.run {
         bnvMain.setupWithNavController(navController)
+        val iconDrawable = ContextCompat.getDrawable(this@MainActivity, R.drawable.baseline_keyboard_arrow_down_24)
+        binding.tbMain.setNavigationIcon(iconDrawable)
         send_list()
+        tbMain.setOnClickListener {
+            showGroupList()
+        }
+
     }
+    fun updateview(item: data_infoGroup){
+        if(item == null){
+            binding.tbMain.title = "프로젝트 없음"
+        }else{
+            binding.tbMain.title = item.name
+        }
+
+    }
+
     fun showGroupList(){
         Log.d("fortest","리사이클러뷰 생성 직전 리스트 값 = "+ groupDataList)
             val service = retrofit.create(Group::class.java)

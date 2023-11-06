@@ -5,6 +5,7 @@ import dev.kichan.daseul.model.data.test.data_create
 import dev.kichan.daseul.model.data.test.data_hash_img
 import dev.kichan.daseul.model.data.test.data_infoGroup
 import dev.kichan.daseul.model.data.test.data_invite
+import dev.kichan.daseul.model.data.test.getInviteInfo
 import dev.kichan.daseul.model.data.test.getReturnUserInfo
 import dev.kichan.daseul.model.data.test.getuserInfo
 import dev.kichan.daseul.model.data.test.joinGroup
@@ -64,4 +65,9 @@ interface Group {
         @Header("Authorization") accessToken: String,
         @Body requestBody: getuserInfo
     ):Call<getReturnUserInfo>
+
+    @GET("group/invite/info/{PathValue}")
+    fun getInviteInfo(
+        @Header("Authorization") accessToken: String,
+        @Path("PathValue") PathValue : String): Call<getInviteInfo>
 }

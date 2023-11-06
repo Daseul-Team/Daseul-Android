@@ -3,31 +3,39 @@ package dev.kichan.daseul.ui.main.group
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dev.kichan.daseul.R
 import dev.kichan.daseul.databinding.FragmentGroupListBinding
 import dev.kichan.daseul.model.data.test.data_infoGroup
+import dev.kichan.daseul.ui.main.MainActivity
 
 class GroupListFragment(private val itemList: MutableList<data_infoGroup>, val Token : String): BottomSheetDialogFragment() {
     private var _binding : FragmentGroupListBinding? = null
     private val binding get() = _binding!!
-    private val Adapter = MyAdapter(itemList,Token)
+    private lateinit var adapter: MyAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentGroupListBinding.inflate(inflater, container, false)
         binding.recyclerViewGroupList.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewGroupList.adapter = Adapter
+        adapter = MyAdapter(itemList, "your_token", object : OnItemClickListener {
+            override fun onItemClick(item: data_infoGroup) {
+                (activity as MainActivity).updateview(item)
+            }
+        })
 
-        Adapter.setData(itemList)
+
+        binding.recyclerViewGroupList.adapter = adapter
+        adapter.setData(itemList)
+
+
         // 아이콘을 Drawable 리소스에서 가져와서 설정
         val iconDrawable = context?.let { ContextCompat.getDrawable(it, R.drawable.icon_make) }
 

@@ -11,12 +11,13 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     android:id="@+id/bottom_sheet_layout"
     android:orientation="vertical"
-    tools:context=".ui.main.group.GroupListFragment">
+    tools:context=".ui.main.group.GroupListFragment"
+    android:theme="@style/font_Suite"
+    >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="프로젝트 리스트"
-        android:textColor="@color/white"
         android:textSize="20dp"
         android:textAlignment="center"
         android:textStyle="bold"

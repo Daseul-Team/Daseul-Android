@@ -1,11 +1,19 @@
 package dev.kichan.daseul.ui.main.login
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AnticipateInterpolator
+import android.widget.Toast
+import android.window.SplashScreen
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.animation.doOnEnd
 import androidx.fragment.app.Fragment
+import com.google.gson.JsonArray
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
@@ -19,6 +27,7 @@ import dev.kichan.daseul.model.data.test.CommonRes
 import dev.kichan.daseul.model.data.test.RegisterReq
 import dev.kichan.daseul.model.data.test.kakaoOauth
 import dev.kichan.daseul.model.data.test.kakaoOauthres
+import dev.kichan.daseul.model.service.Group
 import dev.kichan.daseul.model.service.KaKaoservice
 import dev.kichan.daseul.ui.main.MainActivity
 import retrofit2.Call
@@ -130,8 +139,6 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         KakaoSdk.init(this, kakao_native_api_key)
 
         binding.btnKakaologin.setOnClickListener {

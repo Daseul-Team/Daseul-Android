@@ -3,7 +3,9 @@ package dev.kichan.daseul.ui.main.group
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
+import android.content.ContentUris
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import dev.kichan.daseul.R
 class Project_ImgFragment : Fragment() {
+    var uri : Uri? = null
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,15 @@ class Project_ImgFragment : Fragment() {
         }
         next_btn.setOnClickListener {
             val activity = requireActivity() as Group_MainActivity// 액티비티 형 변환
-            activity.return_imgkey(name_value.toString())
+            if (uri != null) {
+                activity.return_imgkey(name_value.toString())
+            }else{
+                Log.d("fortest","null이라서 넘어가요~")
+                val bundle = Bundle()
+                bundle.putString("key_name", name_value)
+                activity.receiveDataFromFragment(bundle)
+                activity.Retrofit_MakeGroup()
+            }
         }
 
         return view
@@ -46,13 +57,14 @@ class Project_ImgFragment : Fragment() {
         //결과 코드 OK , 결가값 null 아니면
         if(it.resultCode == RESULT_OK && it.data != null){
             //값 담기
-            val uri  = it.data!!.data
+            uri  = it.data!!.data
             Log.d("fortest","imgPath = "+uri)
             val bundle = Bundle()
             bundle.putString("key_img", uri.toString())
             if (activity is Group_MainActivity) {
                 (activity as Group_MainActivity).receiveDataFromFragment(bundle)
             }
+            view?.findViewById<ImageView>(R.id.preveiw)?.setImageURI(uri)
 
         }
     }

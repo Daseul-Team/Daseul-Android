@@ -2,9 +2,12 @@ package dev.kichan.daseul.ui.main.nav
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import dev.kichan.daseul.R
 import dev.kichan.daseul.base.BaseFragment
 import dev.kichan.daseul.databinding.FragmentHomeBinding
@@ -31,6 +34,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun initView() = binding.run {
+
+
         btnHomeStart.setOnClickListener {
             val intent = Intent(requireContext(), LocationService::class.java)
             requireContext().startService(intent)
@@ -39,9 +44,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         btnHomeGotoMap.setOnClickListener {
             val intent = Intent(requireContext(), MapActivity::class.java)
             startActivity(intent)
-        }
-        valueGroup.setOnClickListener {
-            (activity as MainActivity).showGroupList()
         }
     }
 
