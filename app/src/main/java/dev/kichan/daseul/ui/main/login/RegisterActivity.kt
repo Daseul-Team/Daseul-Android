@@ -142,7 +142,7 @@ class RegisterActivity : AppCompatActivity() {
         KakaoSdk.init(this, kakao_native_api_key)
 
         binding.btnKakaologin.setOnClickListener {
-
+            binding.iconDaseul.visibility = View.INVISIBLE
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Log.e("LOGIN", "카카오계정으로 로그인 실패", error)

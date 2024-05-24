@@ -30,18 +30,16 @@ class Project_ImgFragment : Fragment() {
         var upload_bgn = view.findViewById<ImageView>(R.id.btn_upload)
         var next_btn = view.findViewById<Button>(R.id.next_btn)
         val name_value = arguments?.getString("key_name")
-        Log.d("fortest","이미지 프레그먼트로 받아온 이름 = "+name_value)
         upload_bgn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             activityResult.launch(intent)
         }
         next_btn.setOnClickListener {
-            val activity = requireActivity() as Group_MainActivity// 액티비티 형 변환
+            val activity = requireActivity() as Group_MainActivity
             if (uri != null) {
                 activity.return_imgkey(name_value.toString())
             }else{
-                Log.d("fortest","null이라서 넘어가요~")
                 val bundle = Bundle()
                 bundle.putString("key_name", name_value)
                 activity.receiveDataFromFragment(bundle)
@@ -54,11 +52,9 @@ class Project_ImgFragment : Fragment() {
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
 
-        //결과 코드 OK , 결가값 null 아니면
         if(it.resultCode == RESULT_OK && it.data != null){
             //값 담기
             uri  = it.data!!.data
-            Log.d("fortest","imgPath = "+uri)
             val bundle = Bundle()
             bundle.putString("key_img", uri.toString())
             if (activity is Group_MainActivity) {

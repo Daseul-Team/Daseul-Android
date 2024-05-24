@@ -97,7 +97,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main){
 
     fun showGroupList(){
         Log.d("fortest","리사이클러뷰 생성 직전 리스트 값 = "+ groupDataList)
-            val service = retrofit.create(Group::class.java)
             Token = "Bearer "+getSharedPreferences("Group_Info", 0).getString("token", "")
 
         val deferredJobs = groupDataList.map { item ->
@@ -165,13 +164,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main){
         var itemList = mutableListOf<String>()
             val service = retrofit.create(Group::class.java)
             Token = "Bearer "+getSharedPreferences("Group_Info", 0).getString("token", "")
-            Log.d("fortest","받은 결과 ="+Token)
         val call: Call<JsonArray> = service.getListGroupId(Token)
         call.enqueue(object : Callback<JsonArray> {
             override fun onResponse(call: Call<JsonArray>, response: Response<JsonArray>) {
                 if (response.isSuccessful) {
                     val jsonArray: JsonArray? = response.body()
-                    // 결과를 저장할 리스트
 
                     for (element in jsonArray!!) {
                         if (element.isJsonPrimitive) {
@@ -180,7 +177,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main){
                         }
                     }
 
-                    // itemList에 데이터가 동적으로 저장됨
                     for (item in itemList) {
                         Log.d("fortest", "Item $item")
                     }
@@ -204,25 +200,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main){
         val service = retrofit.create(Group::class.java)
         val Token = "Bearer "+getSharedPreferences("Group_Info", 0).getString("token", "")
         val coroutineScope = CoroutineScope(Dispatchers.Default)
-        Log.d("fortest","itemList 데이터 = "+itemList)
         itemList.forEachIndexed { index, item ->
             coroutineScope.launch {
                 val call: Call<data_infoGroup> = service.getGroupInfo(Token, item)
                 val response = call.execute()
 
                 if (response.isSuccessful) {
-                    val dataInfoGroup = response.body() // 이 부분은 data_infoGroup 형식의 응답을 받는다고 가정합니다.
+                    val dataInfoGroup = response.body()
 
                     dataInfoGroup?.let { itemData ->
-                        // itemData에서 원하는 데이터 추출
                         val name = itemData.name
                         val image = itemData.image
                         val participants = itemData.who
-
-                        // 새로운 data_infoGroup 객체 생성
                         val groupData = data_infoGroup(name, image, participants,item)
                         Log.d("fortest", "그룹정보결과 = $groupData")
-                        // 리스트에 추가
                         groupDataList.add(groupData)
                     }
                 } else {

@@ -45,9 +45,8 @@ class MyAdapter(private var items: List<data_infoGroup>, private val token: Stri
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        Log.d("fortest","리사이클러뷰에서 받은 이름"+item)
         val imageUrl = "${BuildConfig.BASE_URL}"+"file/download/"+item.image
-
+        Log.d("fortest","리사이클러뷰 토큰"+token)
         val headers = LazyHeaders.Builder()
             .addHeader("Authorization", token) // 필요한 경우 헤더를 추가
             .build()

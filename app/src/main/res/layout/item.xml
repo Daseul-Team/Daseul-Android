@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
+    android:theme="@style/font_Suite"
     >
 <ImageView
     android:layout_width="wrap_content"
@@ -13,6 +14,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
+    android:src="@drawable/groups"
     />
     <TextView
         android:layout_width="wrap_content"

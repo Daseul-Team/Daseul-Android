@@ -18,7 +18,6 @@ class Name_ProjectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_name__project, container, false)
         var name_edit = view.findViewById<EditText>(R.id.input_name)
         var btn_next = view.findViewById<Button>(R.id.next_btn)
@@ -27,10 +26,6 @@ class Name_ProjectFragment : Fragment() {
             if (name_edit.text.isNullOrEmpty()) {
                 Toast.makeText(context, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
             } else{
-//                val bundle = Bundle()
-//                bundle.putString("key_name", name_edit.text.toString())
-//                val myActivity = activity as Group_MainActivity
-//                myActivity.get_GroupName(bundle)
                 val bundle = Bundle()
                 bundle.putString("key_name",name_edit.text.toString())
                 Log.d("fortest","이름:"+name_edit.text.toString())

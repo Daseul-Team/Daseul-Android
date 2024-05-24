@@ -25,7 +25,6 @@ class GroupCompleteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_group_complete, container, false)
         val invite_id = arguments?.getString("key_invite")
         val barcodeValue = "dasuel://invite?token="+invite_id
@@ -44,9 +43,6 @@ class GroupCompleteFragment : Fragment() {
 
         // 생성된 QR 코드를 ImageView에 표시
         view.findViewById<ImageView>(R.id.img_qr).setImageBitmap(bitmap)
-
-
-        Log.d("fortest","컴플리트 받은 값 = "+invite_id)
 
         view.findViewById<TextView>(R.id.txt_invite).text = invite_id
         view.findViewById<Button>(R.id.next_btn).setOnClickListener{

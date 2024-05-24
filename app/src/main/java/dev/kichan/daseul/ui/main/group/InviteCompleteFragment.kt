@@ -15,7 +15,6 @@ class InviteCompleteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_invite_complete, container, false)
         view.findViewById<Button>(R.id.next_btn).setOnClickListener{
             var intent = Intent(context, MainActivity::class.java)

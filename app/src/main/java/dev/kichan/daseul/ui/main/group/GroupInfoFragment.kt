@@ -27,7 +27,6 @@ class GroupInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_group_info, container, false)
         val dataList = arguments?.getStringArrayList("deep_data")
         Log.d("fortest","딥링크 받아온 값 = "+dataList)
@@ -36,7 +35,7 @@ class GroupInfoFragment : Fragment() {
         view.findViewById<TextView>(R.id.groupTitle).text = dataList[0]+"\n프로젝트에 초대되었습니다."
         view.findViewById<TextView>(R.id.by_who).text = dataList[2]+"이(가) 초대했어요."
         val headers = LazyHeaders.Builder()
-            .addHeader("Authorization", token.toString()) // 필요한 경우 헤더를 추가
+            .addHeader("Authorization", token.toString())
             .build()
 
         val glideUrl = GlideUrl(imageUrl, headers)

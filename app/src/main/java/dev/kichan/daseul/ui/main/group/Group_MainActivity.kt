@@ -44,10 +44,8 @@ class Group_MainActivity : AppCompatActivity() {
     fun return_imgkey(name_value: String) {
         User_Info = name_value
         val Token = "Bearer " + getSharedPreferences("Group_Info", 0).getString("token", "")
-        Log.d("fortest", "이미지 변환에서 확인하는 유저값" + User_Info)
 
         val imageurl = getFilePathFromUri(User_img,this)
-        Log.d("fortest", "이미지 path 받은 값 = " + imageurl)
 
         val imageFile = File(imageurl) // 이미지 파일 경로로부터 File 객체 생성
 
@@ -101,10 +99,8 @@ class Group_MainActivity : AppCompatActivity() {
     fun Retrofit_MakeGroup (){
         val service = retrofit.create(Group::class.java)
         val Token = "Bearer "+getSharedPreferences("Group_Info", 0).getString("token", "")
-        Log.d("fortest_name","만들기 직전 받은 이름 = "+User_Info)
         val requestBody = make_group(User_Info,Group_img)
         val call = service.makeGroup(Token,requestBody)
-        Log.d("fortest","받은 결과 ="+Token)
         call.enqueue(object : Callback<data_create> {
             override fun onFailure(call: Call<data_create>, t: Throwable) {
                 Log.d("Group_test", "API FAIL: ${call}")
@@ -139,7 +135,6 @@ class Group_MainActivity : AppCompatActivity() {
        call.enqueue(object : Callback<data_invite> {
            override fun onResponse(call: Call<data_invite>, response: Response<data_invite>) {
                if (response.isSuccessful) {
-                   // 요청이 성공했을 때의 처리
                    Log.d("Group_test", "isSuccessful() : " + response.code())
                    Log.d("Group_test", "받은 리턴값 :" + response.body())
                    val bundle = Bundle()
@@ -150,7 +145,6 @@ class Group_MainActivity : AppCompatActivity() {
                        .replace(R.id.group_frame, groupCompleteFragment)
                        .commit()
                } else {
-                   // 요청이 실패했을 때의 처리
                    val body = response.errorBody()!!.string()
                    Log.d("Group_test", "error - body : $body")
                }
@@ -212,14 +206,12 @@ class Group_MainActivity : AppCompatActivity() {
                         .replace(R.id.group_frame, fragment)
                         .commit()
                 } else {
-                    // 요청이 실패한 경우
                     val body = response.errorBody()!!.string()
                     Log.d("Group_test", "error - body : $body")
                 }
             }
 
             override fun onFailure(call: Call<getInviteInfo>, t: Throwable) {
-                // 네트워크 오류 또는 예외 처리
             }
         })
     }
